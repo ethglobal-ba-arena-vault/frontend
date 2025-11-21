@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
+  const [activeNav, setActiveNav] = useState('earn')
   const [activeTab, setActiveTab] = useState('vaults')
   const [v2Enabled, setV2Enabled] = useState(true)
 
@@ -60,11 +61,24 @@ function App() {
               <span className="chevron">▼</span>
             </div>
             <nav className="nav">
-              <a href="#" className="nav-link">Dashboard</a>
-              <a href="#" className="nav-link active">Earn</a>
-              <a href="#" className="nav-link">Borrow</a>
-              <a href="#" className="nav-link">Explore</a>
-              <a href="#" className="nav-link">Migrate</a>
+              <button 
+                className={`nav-link ${activeNav === 'earn' ? 'active' : ''}`}
+                onClick={() => setActiveNav('earn')}
+              >
+                Earn
+              </button>
+              <button 
+                className={`nav-link ${activeNav === 'leaderboard' ? 'active' : ''}`}
+                onClick={() => setActiveNav('leaderboard')}
+              >
+                Leaderboard
+              </button>
+              <button 
+                className={`nav-link ${activeNav === 'arena' ? 'active' : ''}`}
+                onClick={() => setActiveNav('arena')}
+              >
+                Arena
+              </button>
             </nav>
           </div>
           <div className="header-right">
