@@ -20,3 +20,6 @@ export { LeaderboardTab } from './LeaderboardTab/LeaderboardTab';
 export type { LeaderboardData, SortField, SortDirection } from './LeaderboardTab/LeaderboardTab';
 export { ChartTab } from './ChartTab/ChartTab';
 export type { ChartDataPoint } from './ChartTab/ChartTab';
+export { AgentOverview } from './AgentOverview/AgentOverview';
+export { AgentPrompt } from './AgentPrompt/AgentPrompt';
+export { AgentStats } from './AgentStats/AgentStats';

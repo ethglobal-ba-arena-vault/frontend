@@ -1,5 +1,6 @@
 import { Card, Image, Text, Badge, Group, Stack, Avatar } from '@mantine/core';
 import { IconTrendingUp, IconTrendingDown } from '@tabler/icons-react';
+import Link from 'next/link';
 import classes from './CoinCard.module.css';
 
 export interface CoinData {
@@ -44,14 +45,15 @@ export function CoinCard({ coin, shouldVibrate = false }: CoinCardProps) {
   const isPositive = coin.priceChange24h >= 0;
 
   return (
-    <Card
-      shadow="sm"
-      padding="lg"
-      radius="md"
-      withBorder
-      className={`${classes.card} ${shouldVibrate ? classes.vibrating : ''}`}
-      style={{ borderColor: 'var(--mantine-color-dark-4)' }}
-    >
+    <Link href={`/agents/${coin.id}`} style={{ textDecoration: 'none' }}>
+      <Card
+        shadow="sm"
+        padding="lg"
+        radius="md"
+        withBorder
+        className={`${classes.card} ${shouldVibrate ? classes.vibrating : ''}`}
+        style={{ borderColor: 'var(--mantine-color-dark-4)', cursor: 'pointer' }}
+      >
       <Card.Section className={classes.imageSection}>
         <Group justify="space-between" p="md">
           <Group gap="xs">
@@ -121,6 +123,7 @@ export function CoinCard({ coin, shouldVibrate = false }: CoinCardProps) {
         </Group>
       </Stack>
     </Card>
+    </Link>
   );
 }
 

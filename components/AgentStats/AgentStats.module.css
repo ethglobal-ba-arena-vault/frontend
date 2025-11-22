@@ -1,0 +1,19 @@
+.wrapper {
+  margin-bottom: var(--mantine-spacing-xl);
+}
+
+.title {
+  font-size: 1.5rem;
+}
+
+.chartContainer {
+  background-color: transparent;
+  padding: var(--mantine-spacing-md);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .chartContainer {
+    padding: var(--mantine-spacing-xs);
+  }
+}
+
