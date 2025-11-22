@@ -1,0 +1,36 @@
+.card {
+    border: 1px solid transparent;
+    position: relative;
+    transition:
+        border-color 150ms ease,
+        transform 150ms ease,
+        box-shadow 150ms ease;
+    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+
+    @mixin hover {
+        z-index: 1;
+        transform: translateY(-4px);
+        box-shadow: var(--mantine-shadow-xl);
+        border-color: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+    }
+}
+
+.date {
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--mantine-color-dimmed);
+    font-size: var(--mantine-font-size-sm);
+    letter-spacing: 0.5px;
+}
+
+.title {
+    font-family: 'Outfit', var(--mantine-font-family);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.3;
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+
+    @media (max-width: $mantine-breakpoint-sm) {
+        font-size: 20px;
+    }
+}
