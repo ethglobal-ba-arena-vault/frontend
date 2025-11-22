@@ -58,7 +58,7 @@ export function Header() {
                     <Group visibleFrom="sm">
                         {mounted && isConnected ? (
                             <Group gap="xs">
-                                <Button variant="filled" color="pumpGreen" size="sm" radius="xl" c="black">
+                                <Button variant="filled" color="pumpGreen" size="sm" radius="xl">
                                     {address ? truncateAddress(address) : 'Connected'}
                                 </Button>
                                 <Button variant="light" color="red" size="sm" radius="xl" onClick={() => disconnect()}>
@@ -68,7 +68,7 @@ export function Header() {
                         ) : (
                             <Menu shadow="md" width={200}>
                                 <Menu.Target>
-                                    <Button radius="xl" variant="filled" color="pumpGreen" c="black">Connect Wallet</Button>
+                                    <Button radius="xl" variant="filled" color="pumpGreen">Connect Wallet</Button>
                                 </Menu.Target>
                                 <Menu.Dropdown>
                                     {connectors.map((connector) => (
@@ -115,7 +115,7 @@ export function Header() {
                     <Group justify="center" grow pb="xl" px="md">
                          {mounted && isConnected ? (
                             <>
-                                <Button variant="filled" color="pumpGreen" size="sm" c="black">
+                                <Button variant="filled" color="pumpGreen" size="sm">
                                     {address ? truncateAddress(address) : 'Connected'}
                                 </Button>
                                 <Button variant="light" color="red" size="sm" onClick={() => disconnect()}>
@@ -125,7 +125,7 @@ export function Header() {
                         ) : (
                             <Menu shadow="md" width={200}>
                                 <Menu.Target>
-                                    <Button fullWidth variant="filled" color="pumpGreen" c="black">Connect Wallet</Button>
+                                    <Button fullWidth variant="filled" color="pumpGreen">Connect Wallet</Button>
                                 </Menu.Target>
                                 <Menu.Dropdown>
                                     {connectors.map((connector) => (

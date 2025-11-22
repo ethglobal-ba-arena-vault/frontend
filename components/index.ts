@@ -8,3 +8,8 @@ export { Features } from './Features/Features';
 export { ColorSchemeToggle } from './ColorSchemeToggle/ColorSchemeToggle';
 export { Welcome } from './Welcome/Welcome';
 export { Layout } from './Layout/Layout';
+export { TrendingCoins } from './TrendingCoins/TrendingCoins';
+export type { FilterType } from './TrendingCoins/TrendingCoins';
+export { CoinList } from './CoinList/CoinList';
+export { CoinCard } from './CoinCard/CoinCard';
+export type { CoinData } from './CoinCard/CoinCard';

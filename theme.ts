@@ -24,9 +24,16 @@ export const theme = createTheme({
     Button: {
       defaultProps: {
         radius: 'xl',
-        color: 'pumpGreen',
-        c: '#000', // Black text on green button for high contrast
+        color: 'pumpGreen', // Background color matches PUMP.CLONE font color
+        c: 'white', // White text for contrast on green background
         fw: 700,
+      },
+      styles: {
+        root: {
+          '&[data-variant="filled"]': {
+            backgroundColor: 'var(--mantine-color-pumpGreen-5)', // Use brighter green shade
+          },
+        },
       },
     },
     Card: {

@@ -1,0 +1,12 @@
+.wrapper {
+  padding-top: 40px;
+  padding-bottom: 80px;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .wrapper {
+    padding-top: 30px;
+    padding-bottom: 60px;
+  }
+}
+
