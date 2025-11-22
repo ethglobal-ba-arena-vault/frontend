@@ -7,6 +7,8 @@ import {
   Group,
   Avatar,
   TextInput,
+  NumberInput,
+  Select,
   Button,
   Card,
   Stack,
@@ -76,6 +78,8 @@ export default function PredictionPage() {
   const agentImage = getAgentImageFromId(agentId);
 
   const [polymarketUrl, setPolymarketUrl] = useState('');
+  const [temperature, setTemperature] = useState<number | string>(0.7);
+  const [thinkMode, setThinkMode] = useState<string | null>('fast');
   const [isRunning, setIsRunning] = useState(false);
   const [predictionResult, setPredictionResult] = useState<PredictionResult | null>(null);
   const [userAction, setUserAction] = useState<'buy' | 'sell' | null>(null);
@@ -158,6 +162,41 @@ export default function PredictionPage() {
             disabled={isRunning}
             className={classes.urlInput}
           />
+
+          <Group grow>
+            <NumberInput
+              label="Temperature"
+              placeholder="0.7"
+              value={temperature}
+              onChange={setTemperature}
+              min={0}
+              max={2}
+              step={0.1}
+              size="md"
+              disabled={isRunning}
+              decimalScale={1}
+              styles={{
+                label: { color: 'var(--mantine-color-white)', marginBottom: '8px' },
+                input: { backgroundColor: 'var(--mantine-color-dark-8)', color: 'var(--mantine-color-white)' },
+              }}
+            />
+            <Select
+              label="Think Mode"
+              placeholder="Select mode"
+              value={thinkMode}
+              onChange={setThinkMode}
+              data={[
+                { value: 'fast', label: 'Fast' },
+                { value: 'deep', label: 'Deep Think' },
+              ]}
+              size="md"
+              disabled={isRunning}
+              styles={{
+                label: { color: 'var(--mantine-color-white)', marginBottom: '8px' },
+                input: { backgroundColor: 'var(--mantine-color-dark-8)', color: 'var(--mantine-color-white)' },
+              }}
+            />
+          </Group>
 
           <Button
             leftSection={<IconRocket size={18} />}
