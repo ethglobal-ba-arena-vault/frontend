@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useInterval } from 'react-use';
 import { PredictionData } from './LatestPredictions';
 
 const MAX_ROWS = 5;
@@ -15,6 +14,8 @@ export function usePredictions() {
   const rowsRef = useRef<PredictionData[]>([]);
   const usedIdsRef = useRef<Set<string>>(new Set());
   const availablePredictionsRef = useRef<PredictionData[]>([]);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const isProcessingRef = useRef<boolean>(false); // Prevent concurrent executions
 
   // Keep refs in sync with state
   useEffect(() => {
@@ -128,92 +129,125 @@ export function usePredictions() {
     usedIdsRef.current = newUsedIds;
   }, []);
 
-  // Callback for adding a random row - wrapped in useCallback to prevent useInterval from restarting
+  // Callback for adding a random row - uses refs to avoid stale closures
   const addRandomRowPeriodically = useCallback(() => {
-    const currentRows = rowsRef.current;
-    const currentUsedIds = usedIdsRef.current;
-    const currentAvailable = availablePredictionsRef.current;
-
-    if (currentAvailable.length === 0) {
-      return; // No predictions available yet
+    // Prevent concurrent executions - critical for preventing multiple intervals from running simultaneously
+    if (isProcessingRef.current) {
+      return;
     }
-
-    // Safety check: ensure we never exceed MAX_ROWS
-    // If somehow we have more than MAX_ROWS, trim it first and skip this iteration
-    if (currentRows.length > MAX_ROWS) {
-      const trimmedRows = currentRows.slice(0, MAX_ROWS);
-      setRows(trimmedRows);
-      rowsRef.current = trimmedRows;
-      return; // Skip this iteration to let the state settle
-    }
-
-    // Filter out already used predictions
-    const unusedPredictions = currentAvailable.filter(
-      (pred) => !currentUsedIds.has(pred.id)
-    );
-
-    // If all predictions are used, reset the used set
-    const predictionsToChooseFrom =
-      unusedPredictions.length > 0 ? unusedPredictions : currentAvailable;
-
-    if (predictionsToChooseFrom.length === 0) {
-      return; // No predictions available
-    }
-
-    // Pick a random prediction
-    const randomIndex = Math.floor(Math.random() * predictionsToChooseFrom.length);
-    const selectedPrediction = predictionsToChooseFrom[randomIndex];
-
-    // Calculate new rows
-    let newRows: PredictionData[];
     
-    if (currentRows.length >= MAX_ROWS) {
-      // Mark the last row for fade out
-      const lastRowId = currentRows[currentRows.length - 1].id;
-      setFadingOutId(lastRowId);
-      
-      // Remove the last row and add new one at the beginning
-      newRows = [selectedPrediction, ...currentRows.slice(0, -1)];
-      
-      // Clear fade out after animation completes
-      setTimeout(() => {
-        setFadingOutId(null);
-      }, 500);
-    } else {
-      // Add new row at the beginning
-      newRows = [selectedPrediction, ...currentRows];
-    }
-
-    // Final safety check: ensure newRows never exceeds MAX_ROWS
-    const finalRows = newRows.length > MAX_ROWS ? newRows.slice(0, MAX_ROWS) : newRows;
-    const newUsedIds = new Set(currentUsedIds).add(selectedPrediction.id);
+    isProcessingRef.current = true;
     
-    // Update state separately (not nested)
-    // Use functional update for rows to prevent race conditions with multiple intervals
-    setRows((prevRows) => {
-      // If previous rows already at max and we're trying to add more, check if we should proceed
-      // This prevents multiple intervals from adding rows simultaneously
-      if (prevRows.length >= MAX_ROWS && finalRows.length > MAX_ROWS) {
-        return prevRows; // Skip update if it would exceed limit
+    try {
+      const currentRows = rowsRef.current;
+      const currentUsedIds = usedIdsRef.current;
+      const currentAvailable = availablePredictionsRef.current;
+
+      if (currentAvailable.length === 0) {
+        return; // No predictions available yet
       }
-      const safeRows = finalRows.length > MAX_ROWS ? finalRows.slice(0, MAX_ROWS) : finalRows;
-      rowsRef.current = safeRows;
-      return safeRows;
-    });
-    
-    setUsedIds(newUsedIds);
-    usedIdsRef.current = newUsedIds;
 
-    // Mark new row for fade in
-    setFadingInId(selectedPrediction.id);
-    setTimeout(() => {
-      setFadingInId(null);
-    }, 500);
+      // Critical safety check: ensure we never exceed MAX_ROWS
+      if (currentRows.length > MAX_ROWS) {
+        const trimmedRows = currentRows.slice(0, MAX_ROWS);
+        setRows(trimmedRows);
+        rowsRef.current = trimmedRows;
+        return; // Skip this iteration to let the state settle
+      }
+
+      // Filter out already used predictions
+      const unusedPredictions = currentAvailable.filter(
+        (pred) => !currentUsedIds.has(pred.id)
+      );
+
+      // If all predictions are used, reset the used set
+      const predictionsToChooseFrom =
+        unusedPredictions.length > 0 ? unusedPredictions : currentAvailable;
+
+      if (predictionsToChooseFrom.length === 0) {
+        return; // No predictions available
+      }
+
+      // Pick a random prediction
+      const randomIndex = Math.floor(Math.random() * predictionsToChooseFrom.length);
+      const selectedPrediction = predictionsToChooseFrom[randomIndex];
+
+      // Calculate new rows - ensure we never exceed MAX_ROWS
+      let newRows: PredictionData[];
+      
+      if (currentRows.length >= MAX_ROWS) {
+        // Mark the last row for fade out
+        const lastRowId = currentRows[currentRows.length - 1].id;
+        setFadingOutId(lastRowId);
+        
+        // Remove the last row and add new one at the beginning
+        newRows = [selectedPrediction, ...currentRows.slice(0, -1)];
+        
+        // Clear fade out after animation completes
+        setTimeout(() => {
+          setFadingOutId(null);
+        }, 500);
+      } else {
+        // Add new row at the beginning
+        newRows = [selectedPrediction, ...currentRows];
+      }
+
+      // Final safety check: ensure newRows never exceeds MAX_ROWS
+      const finalRows = newRows.length > MAX_ROWS ? newRows.slice(0, MAX_ROWS) : newRows;
+      const newUsedIds = new Set(currentUsedIds).add(selectedPrediction.id);
+      
+      // Use functional update to prevent race conditions
+      setRows((prevRows) => {
+        // Double-check: if we're already at max, don't add more
+        if (prevRows.length >= MAX_ROWS && finalRows.length > MAX_ROWS) {
+          return prevRows;
+        }
+        // Ensure we never exceed MAX_ROWS
+        const safeRows = finalRows.length > MAX_ROWS ? finalRows.slice(0, MAX_ROWS) : finalRows;
+        rowsRef.current = safeRows;
+        return safeRows;
+      });
+      
+      setUsedIds(newUsedIds);
+      usedIdsRef.current = newUsedIds;
+
+      // Mark new row for fade in
+      setFadingInId(selectedPrediction.id);
+      setTimeout(() => {
+        setFadingInId(null);
+      }, 500);
+    } finally {
+      isProcessingRef.current = false;
+    }
   }, []); // Empty deps - callback uses refs, so it doesn't need to change
 
-  // Periodically add rows every 1 second (only after data is loaded)
-  // useInterval handles cleanup automatically - pass null to pause
-  useInterval(addRandomRowPeriodically, availablePredictions.length > 0 ? 1000 : null);
+  // Manual interval management for better control and to prevent duplicate intervals
+  useEffect(() => {
+    // Always clear existing interval first - critical to prevent duplicates
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+
+    // Don't start interval until we have predictions data
+    if (availablePredictions.length === 0) {
+      return;
+    }
+
+    // Create new interval
+    intervalRef.current = setInterval(() => {
+      addRandomRowPeriodically();
+    }, 1000);
+
+    // Cleanup function - always runs on unmount or when dependencies change
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      isProcessingRef.current = false; // Reset processing flag on cleanup
+    };
+  }, [availablePredictions.length, addRandomRowPeriodically]);
 
   // Safety effect: ensure rows never exceed MAX_ROWS (defensive check)
   useEffect(() => {
