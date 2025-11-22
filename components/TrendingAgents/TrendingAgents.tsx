@@ -1,8 +1,8 @@
 import { Container, Title, Group, Button } from '@mantine/core';
-import { IconStar, IconFlame, IconCircleDot, IconCoin, IconLeaf, IconPlanet, IconMessageCircle, IconBolt } from '@tabler/icons-react';
-import classes from './TrendingCoins.module.css';
+import { IconStar, IconCircleDot, IconCoin, IconLeaf, IconPlanet, IconMessageCircle, IconBolt } from '@tabler/icons-react';
+import classes from './TrendingAgents.module.css';
 
-export type FilterType = 'featured' | 'mayhem' | 'live' | 'valuable' | 'new' | 'oldest' | 'lastReply' | 'lastTrade';
+export type FilterType = 'featured' | 'live' | 'valuable' | 'new' | 'oldest' | 'lastReply' | 'lastTrade';
 
 interface Filter {
   id: FilterType;
@@ -12,21 +12,20 @@ interface Filter {
 
 const filters: Filter[] = [
   { id: 'featured', label: 'Featured', icon: IconStar },
-  { id: 'mayhem', label: 'Mayhem', icon: IconFlame },
   { id: 'live', label: 'Live now', icon: IconCircleDot },
   { id: 'valuable', label: 'Most valuable', icon: IconCoin },
-  { id: 'new', label: 'New coins', icon: IconLeaf },
-  { id: 'oldest', label: 'Oldest coins', icon: IconPlanet },
+  { id: 'new', label: 'New agents', icon: IconLeaf },
+  { id: 'oldest', label: 'Old agents', icon: IconPlanet },
   { id: 'lastReply', label: 'Last reply', icon: IconMessageCircle },
   { id: 'lastTrade', label: 'Last trade', icon: IconBolt },
 ];
 
-interface TrendingCoinsProps {
+interface TrendingAgentsProps {
   activeFilter: FilterType;
   onFilterChange: (filter: FilterType) => void;
 }
 
-export function TrendingCoins({ activeFilter, onFilterChange }: TrendingCoinsProps) {
+export function TrendingAgents({ activeFilter, onFilterChange }: TrendingAgentsProps) {
 
   return (
     <Container size="xl" className={classes.wrapper}>

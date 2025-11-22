@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { TrendingCoins, CoinList, Footer, LatestPredictions } from '../components';
-import type { FilterType } from '../components/TrendingCoins/TrendingCoins';
+import { TrendingAgents, AgentList, Footer, LatestPredictions } from '../components';
+import type { FilterType } from '../components/TrendingAgents/TrendingAgents';
 
 export default function HomePage() {
   const [activeFilter, setActiveFilter] = useState<FilterType>('featured');
@@ -8,8 +8,8 @@ export default function HomePage() {
   return (
     <>
       <LatestPredictions />
-      <TrendingCoins activeFilter={activeFilter} onFilterChange={setActiveFilter} />
-      <CoinList coins={[]} filter={activeFilter} />
+      <TrendingAgents activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+      <AgentList coins={[]} filter={activeFilter} />
       <Footer />
     </>
   );

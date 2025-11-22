@@ -1,11 +1,11 @@
 import { Container, SimpleGrid, Pagination, Group, Center } from '@mantine/core';
 import { useState, useEffect, useMemo } from 'react';
 import { CoinCard, CoinData } from '../CoinCard/CoinCard';
-import classes from './CoinList.module.css';
+import classes from './AgentList.module.css';
 
-import { FilterType } from '../TrendingCoins/TrendingCoins';
+import { FilterType } from '../TrendingAgents/TrendingAgents';
 
-interface CoinListProps {
+interface AgentListProps {
   coins: CoinData[];
   filter?: FilterType;
 }
@@ -63,9 +63,6 @@ const generateMockCoins = (count: number, filter?: FilterType, seed: number = 12
     case 'new':
       filtered = [...coins].reverse();
       break;
-    case 'mayhem':
-      filtered = [...coins].sort((a, b) => Math.abs(b.priceChange24h) - Math.abs(a.priceChange24h));
-      break;
     default:
       filtered = coins;
   }
@@ -73,7 +70,7 @@ const generateMockCoins = (count: number, filter?: FilterType, seed: number = 12
   return filtered;
 };
 
-export function CoinList({ coins: initialCoins, filter }: CoinListProps) {
+export function AgentList({ coins: initialCoins, filter }: AgentListProps) {
   const [page, setPage] = useState(1);
   const [reorderedCoins, setReorderedCoins] = useState<CoinData[]>([]);
   const [shouldVibrate, setShouldVibrate] = useState(false);
