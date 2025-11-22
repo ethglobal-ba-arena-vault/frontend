@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { PredictionData } from './LatestPredictions';
 
-const MAX_ROWS = 5;
+const MAX_ROWS = 10;
 const ANIMATION_DURATION = 500;
 
 // Best Practice: Custom hook for declarative intervals
@@ -116,8 +116,8 @@ export function usePredictions() {
     });
   }, [availablePredictions, usedIds, rows]);
 
-  // Run interval every 1s if we have data
-  useInterval(addRandomRow, availablePredictions.length > 0 ? 1000 : null);
+  // Run interval every 500ms if we have data
+  useInterval(addRandomRow, availablePredictions.length > 0 ? 500 : null);
 
   return {
     rows,

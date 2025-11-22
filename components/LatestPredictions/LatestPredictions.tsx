@@ -13,6 +13,8 @@ export interface PredictionData {
   txns: number;
   market: string;
   decision: 'Buy' | 'Sell';
+  price: number;
+  amount: number;
 }
 
 // Mini chart component for Activity and Revenue
@@ -43,7 +45,7 @@ export function LatestPredictions() {
 
   const tableRows = rows.map((prediction, _index) => {
     // Safety check for data
-    if (!prediction || !prediction.activity || !prediction.revenue) {
+    if (!prediction || !prediction.activity) {
       return null;
     }
     
@@ -67,14 +69,21 @@ export function LatestPredictions() {
         <MiniChart data={prediction.activity} color="#22c55e" />
       </Table.Td>
       <Table.Td>
-        <MiniChart data={prediction.revenue} color="#3b82f6" />
-      </Table.Td>
-      <Table.Td>
         <Text size="sm">{prediction.txns.toLocaleString()}</Text>
       </Table.Td>
       <Table.Td>
         <Text size="sm" c="dimmed" lineClamp={1} style={{ maxWidth: 300 }}>
           {prediction.market}
+        </Text>
+      </Table.Td>
+      <Table.Td>
+        <Text size="sm" fw={500}>
+          {prediction.price.toLocaleString(undefined, { minimumFractionDigits: 4, maximumFractionDigits: 4 })}
+        </Text>
+      </Table.Td>
+      <Table.Td>
+        <Text size="sm">
+          {prediction.amount.toLocaleString()}
         </Text>
       </Table.Td>
       <Table.Td>
@@ -98,15 +107,16 @@ export function LatestPredictions() {
       </Title>
       
       <div className={classes.tableWrapper}>
-        <Table.ScrollContainer minWidth={800}>
+        <Table.ScrollContainer minWidth={900}>
           <Table verticalSpacing="md" highlightOnHover>
             <Table.Thead>
               <Table.Tr>
                 <Table.Th>Name</Table.Th>
                 <Table.Th>Activity</Table.Th>
-                <Table.Th>Revenue</Table.Th>
                 <Table.Th>Txns</Table.Th>
                 <Table.Th>Market</Table.Th>
+                <Table.Th>Price</Table.Th>
+                <Table.Th>Amount</Table.Th>
                 <Table.Th>Decision</Table.Th>
               </Table.Tr>
             </Table.Thead>
