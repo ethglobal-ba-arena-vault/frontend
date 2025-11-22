@@ -1,0 +1,32 @@
+.wrapper {
+  padding-top: 80px;
+  padding-bottom: 40px;
+}
+
+.title {
+  color: var(--mantine-color-white);
+  font-weight: 900;
+}
+
+.urlInput {
+  width: 100%;
+}
+
+.reasoningCode {
+  background-color: var(--mantine-color-dark-8);
+  color: var(--mantine-color-white);
+  padding: var(--mantine-spacing-md);
+  border-radius: var(--mantine-radius-md);
+  white-space: pre-wrap;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .wrapper {
+    padding-top: 60px;
+    padding-bottom: 30px;
+  }
+}
+

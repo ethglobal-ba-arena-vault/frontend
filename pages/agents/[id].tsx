@@ -1,7 +1,8 @@
 'use client';
 
-import { Container, Title, Group, Avatar } from '@mantine/core';
+import { Container, Title, Group, Avatar, Button } from '@mantine/core';
 import { useRouter } from 'next/router';
+import { IconRocket } from '@tabler/icons-react';
 import { AgentOverview } from '../../components/AgentOverview/AgentOverview';
 import { AgentPrompt } from '../../components/AgentPrompt/AgentPrompt';
 import { AgentStats } from '../../components/AgentStats/AgentStats';
@@ -45,13 +46,30 @@ export default function AgentDetailPage() {
   const agentName = getAgentNameFromId(agentId);
   const agentImage = getAgentImageFromId(agentId);
 
+  const handleTryoutClick = () => {
+    if (agentId) {
+      router.push(`/agents/${agentId}/prediction`);
+    }
+  };
+
   return (
     <Container size="xl" className={classes.wrapper}>
-      <Group gap="md" mb="xl">
-        <Avatar src={agentImage} alt={agentName} size="lg" radius="xl" />
-        <Title order={1} className={classes.title}>
-          {agentName}
-        </Title>
+      <Group gap="md" mb="xl" justify="space-between" wrap="nowrap">
+        <Group gap="md">
+          <Avatar src={agentImage} alt={agentName} size="lg" radius="xl" />
+          <Title order={1} className={classes.title}>
+            {agentName}
+          </Title>
+        </Group>
+        <Button
+          leftSection={<IconRocket size={18} />}
+          onClick={handleTryoutClick}
+          color="pumpGreen"
+          variant="filled"
+          size="md"
+        >
+          Tryout
+        </Button>
       </Group>
 
       <AgentOverview agentId={agentId} />
