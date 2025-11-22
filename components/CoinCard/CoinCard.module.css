@@ -10,6 +10,47 @@
   border-color: var(--mantine-color-pumpGreen-5);
 }
 
+.vibrating {
+  animation: vibrate 0.5s ease-in-out;
+}
+
+.vibrating:hover {
+  animation-play-state: paused;
+}
+
+@keyframes vibrate {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-2px, -2px);
+  }
+  20% {
+    transform: translate(2px, 2px);
+  }
+  30% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(2px, -2px);
+  }
+  50% {
+    transform: translate(-1px, 1px);
+  }
+  60% {
+    transform: translate(1px, -1px);
+  }
+  70% {
+    transform: translate(-1px, -1px);
+  }
+  80% {
+    transform: translate(1px, 1px);
+  }
+  90% {
+    transform: translate(-1px, 0);
+  }
+}
+
 .imageSection {
   border-bottom: 1px solid var(--mantine-color-dark-4);
 }

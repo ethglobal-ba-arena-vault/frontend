@@ -17,6 +17,7 @@ export interface CoinData {
 
 interface CoinCardProps {
   coin: CoinData;
+  shouldVibrate?: boolean;
 }
 
 const formatPrice = (price: number): string => {
@@ -39,7 +40,7 @@ const formatMarketCap = (marketCap: number): string => {
   return `$${marketCap.toFixed(2)}`;
 };
 
-export function CoinCard({ coin }: CoinCardProps) {
+export function CoinCard({ coin, shouldVibrate = false }: CoinCardProps) {
   const isPositive = coin.priceChange24h >= 0;
 
   return (
@@ -48,7 +49,7 @@ export function CoinCard({ coin }: CoinCardProps) {
       padding="lg"
       radius="md"
       withBorder
-      className={classes.card}
+      className={`${classes.card} ${shouldVibrate ? classes.vibrating : ''}`}
       style={{ borderColor: 'var(--mantine-color-dark-4)' }}
     >
       <Card.Section className={classes.imageSection}>

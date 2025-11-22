@@ -75,6 +75,8 @@ const generateMockCoins = (count: number, filter?: FilterType, seed: number = 12
 
 export function CoinList({ coins: initialCoins, filter }: CoinListProps) {
   const [page, setPage] = useState(1);
+  const [reorderedCoins, setReorderedCoins] = useState<CoinData[]>([]);
+  const [shouldVibrate, setShouldVibrate] = useState(false);
   const itemsPerPage = 12;
   
   // Reset to page 1 when filter changes
@@ -91,17 +93,52 @@ export function CoinList({ coins: initialCoins, filter }: CoinListProps) {
     // Use a stable seed so server and client generate the same data
     return generateMockCoins(48, filter, 12345);
   }, [initialCoins, filter]);
+
+  // Initialize reordered coins
+  useEffect(() => {
+    setReorderedCoins([...coins]);
+  }, [coins]);
+
+  // Periodically reorder coins
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setReorderedCoins((prevCoins) => {
+        // Create a shuffled copy of the coins array
+        const shuffled = [...prevCoins];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+      });
+    }, 5000); // Reorder every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Periodically trigger vibration for the first coin
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShouldVibrate(true);
+      // Reset after animation completes (0.5s)
+      setTimeout(() => {
+        setShouldVibrate(false);
+      }, 500);
+    }, 3000); // Vibrate every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
   
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const paginatedCoins = coins.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(coins.length / itemsPerPage);
+  const paginatedCoins = reorderedCoins.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(reorderedCoins.length / itemsPerPage);
 
   return (
     <Container size="xl" className={classes.wrapper}>
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing="lg">
-        {paginatedCoins.map((coin) => (
-          <CoinCard key={coin.id} coin={coin} />
+        {paginatedCoins.map((coin, index) => (
+          <CoinCard key={coin.id} coin={coin} shouldVibrate={index === 0 && shouldVibrate} />
         ))}
       </SimpleGrid>
 
