@@ -14,3 +14,5 @@ export { CoinList } from './CoinList/CoinList';
 export { CoinCard } from './CoinCard/CoinCard';
 export type { CoinData } from './CoinCard/CoinCard';
 export { OverallStats } from './OverallStats/OverallStats';
+export { LatestPredictions } from './LatestPredictions/LatestPredictions';
+export type { PredictionData } from './LatestPredictions/LatestPredictions';
