@@ -50,11 +50,11 @@ export function Header() {
                         <Link href="/" className={classes.link}>
                             Home
                         </Link>
+                        <Link href="/create" className={classes.link}>
+                            Create Agent
+                        </Link>
                         <Link href="/live" className={classes.link}>
                             Live
-                        </Link>
-                        <Link href="/create" className={classes.link}>
-                            Create Coin
                         </Link>
                     </Group>
 
@@ -106,11 +106,11 @@ export function Header() {
                     <Link href="/" className={classes.link}>
                         Home
                     </Link>
+                    <Link href="/create" className={classes.link}>
+                        Create Agent
+                    </Link>
                     <Link href="/live" className={classes.link}>
                         Live
-                    </Link>
-                    <Link href="/create" className={classes.link}>
-                        Create Coin
                     </Link>
 
                     <Divider my="sm" />
