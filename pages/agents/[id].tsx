@@ -2,7 +2,7 @@
 
 import { Container, Title, Group, Avatar, Button } from '@mantine/core';
 import { useRouter } from 'next/router';
-import { IconRocket } from '@tabler/icons-react';
+import { IconRocket, IconChartBar } from '@tabler/icons-react';
 import { AgentOverview } from '../../components/AgentOverview/AgentOverview';
 import { AgentPrompt } from '../../components/AgentPrompt/AgentPrompt';
 import { AgentStats } from '../../components/AgentStats/AgentStats';
@@ -52,6 +52,12 @@ export default function AgentDetailPage() {
     }
   };
 
+  const handleBacktestClick = () => {
+    if (agentId) {
+      router.push(`/agents/${agentId}/backtest`);
+    }
+  };
+
   return (
     <Container size="xl" className={classes.wrapper}>
       <Group gap="md" mb="xl" justify="space-between" wrap="nowrap">
@@ -61,15 +67,26 @@ export default function AgentDetailPage() {
             {agentName}
           </Title>
         </Group>
-        <Button
-          leftSection={<IconRocket size={18} />}
-          onClick={handleTryoutClick}
-          color="pumpGreen"
-          variant="filled"
-          size="md"
-        >
-          Tryout
-        </Button>
+        <Group gap="sm">
+          <Button
+            leftSection={<IconRocket size={18} />}
+            onClick={handleTryoutClick}
+            color="pumpGreen"
+            variant="filled"
+            size="md"
+          >
+            Tryout
+          </Button>
+          <Button
+            leftSection={<IconChartBar size={18} />}
+            onClick={handleBacktestClick}
+            color="pumpGreen"
+            variant="outline"
+            size="md"
+          >
+            Backtest
+          </Button>
+        </Group>
       </Group>
 
       <AgentOverview agentId={agentId} />

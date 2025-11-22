@@ -1,0 +1,21 @@
+.wrapper {
+  padding-top: 80px;
+  padding-bottom: 40px;
+}
+
+.title {
+  color: var(--mantine-color-white);
+  font-weight: 900;
+}
+
+.dateInput {
+  width: 100%;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .wrapper {
+    padding-top: 60px;
+    padding-bottom: 30px;
+  }
+}
+

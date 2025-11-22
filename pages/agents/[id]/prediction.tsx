@@ -127,7 +127,7 @@ export default function PredictionPage() {
       <Group gap="md" mb="xl">
         <Avatar src={agentImage} alt={agentName} size="lg" radius="xl" />
         <Title order={1} className={classes.title}>
-          {agentName} - Prediction Tryout
+          {agentName}
         </Title>
       </Group>
 
