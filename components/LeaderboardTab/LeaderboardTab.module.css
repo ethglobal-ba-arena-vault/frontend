@@ -1,0 +1,13 @@
+.tableWrapper {
+  background-color: var(--mantine-color-dark-7);
+  border-radius: var(--mantine-radius-md);
+  padding: var(--mantine-spacing-md);
+  border: 1px solid var(--mantine-color-dark-4);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .tableWrapper {
+    padding: var(--mantine-spacing-xs);
+  }
+}
+

@@ -16,3 +16,7 @@ export type { CoinData } from './CoinCard/CoinCard';
 export { OverallStats } from './OverallStats/OverallStats';
 export { LatestPredictions } from './LatestPredictions/LatestPredictions';
 export type { PredictionData } from './LatestPredictions/LatestPredictions';
+export { LeaderboardTab } from './LeaderboardTab/LeaderboardTab';
+export type { LeaderboardData, SortField, SortDirection } from './LeaderboardTab/LeaderboardTab';
+export { ChartTab } from './ChartTab/ChartTab';
+export type { ChartDataPoint } from './ChartTab/ChartTab';
