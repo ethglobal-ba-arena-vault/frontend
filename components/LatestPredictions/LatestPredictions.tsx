@@ -39,7 +39,7 @@ const MiniChart = ({ data, color = '#22c55e' }: { data: { time: number; value: n
 };
 
 export function LatestPredictions() {
-  const { rows, fadingOutId, fadingInId } = usePredictions();
+  const { rows, fadingInId } = usePredictions();
 
   const tableRows = rows.map((prediction, _index) => {
     // Safety check for data
@@ -47,12 +47,9 @@ export function LatestPredictions() {
       return null;
     }
     
-    const isFadingOut = fadingOutId === prediction.id;
     const isFadingIn = fadingInId === prediction.id;
     
-    const className = isFadingOut 
-      ? classes.fadeOut 
-      : isFadingIn 
+    const className = isFadingIn 
       ? classes.fadeIn 
       : '';
     

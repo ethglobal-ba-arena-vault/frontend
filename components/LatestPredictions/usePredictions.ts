@@ -32,7 +32,6 @@ export function usePredictions() {
   const [availablePredictions, setAvailablePredictions] = useState<PredictionData[]>([]);
   const [usedIds, setUsedIds] = useState<Set<string>>(new Set());
   
-  const [fadingOutId, setFadingOutId] = useState<string | null>(null);
   const [fadingInId, setFadingInId] = useState<string | null>(null);
 
   // Load initial data
@@ -78,14 +77,18 @@ export function usePredictions() {
       return;
     }
 
-    // Logic to pick a new row (uses current state)
-    const unused = availablePredictions.filter(p => !usedIds.has(p.id));
-    const candidates = unused.length > 0 ? unused : availablePredictions; // Reset if exhausted
-    
-    if (candidates.length === 0) {
+    // Prevent duplicates: exclude currently visible rows
+    const visibleIds = new Set(rows.map(r => r.id));
+    const availableCandidates = availablePredictions.filter(p => !visibleIds.has(p.id));
+
+    if (availableCandidates.length === 0) {
       return;
     }
 
+    // Logic to pick a new row: prefer unused ones
+    const unused = availableCandidates.filter(p => !usedIds.has(p.id));
+    const candidates = unused.length > 0 ? unused : availableCandidates;
+    
     const randomIndex = Math.floor(Math.random() * candidates.length);
     const selectedPrediction = candidates[randomIndex];
 
@@ -100,29 +103,18 @@ export function usePredictions() {
     setFadingInId(selectedPrediction.id);
     setTimeout(() => setFadingInId(null), ANIMATION_DURATION);
 
-    // 3. Update Rows (Handle Fade Out if full)
+    // 3. Update Rows (Remove last row immediately)
     setRows(currentRows => {
       const isFull = currentRows.length >= MAX_ROWS;
       
       if (isFull) {
-        // Mark the last row to fade out
-        const lastRowToExit = currentRows[currentRows.length - 1];
-        setFadingOutId(lastRowToExit.id);
-        
-        // Schedule removal after animation
-        setTimeout(() => {
-          setFadingOutId(null);
-          setRows(curr => curr.filter(r => r.id !== lastRowToExit.id));
-        }, ANIMATION_DURATION);
-        
-        // Temporarily add new row while keeping the old one for animation
-        // This ensures the "fade out" row is still in the DOM to be animated
-        return [selectedPrediction, ...currentRows];
+        // Remove the last row immediately and add new one at the beginning
+        return [selectedPrediction, ...currentRows.slice(0, MAX_ROWS - 1)];
       }
       
       return [selectedPrediction, ...currentRows];
     });
-  }, [availablePredictions, usedIds]);
+  }, [availablePredictions, usedIds, rows]);
 
   // Run interval every 1s if we have data
   useInterval(addRandomRow, availablePredictions.length > 0 ? 1000 : null);
@@ -131,7 +123,6 @@ export function usePredictions() {
     rows,
     addRandomRow,
     canAddMore: rows.length < MAX_ROWS,
-    fadingOutId,
     fadingInId,
   };
 }
