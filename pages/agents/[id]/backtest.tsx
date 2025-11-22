@@ -111,7 +111,7 @@ export default function BacktestPage() {
 
   const [startDate, setStartDate] = useState(getDefaultStartDate());
   const [endDate, setEndDate] = useState(getDefaultEndDate());
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(CATEGORIES.map(c => c.id)); // Pre-select all categories
   const [isRunning, setIsRunning] = useState(false);
   const [progress, setProgress] = useState(0);
   const [results, setResults] = useState<BacktestResult | null>(null);
@@ -129,22 +129,27 @@ export default function BacktestPage() {
     setProgress(0);
     setResults(null);
 
-    // Simulate backtest progress
+    // Simulate backtest progress with smooth animation
+    let currentProgress = 0;
     const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return prev + Math.random() * 15;
-      });
-    }, 500);
+      currentProgress += Math.random() * 10 + 5; // Increment by 5-15%
+      if (currentProgress >= 95) {
+        currentProgress = 95; // Stop at 95% until API call completes
+        setProgress(95);
+      } else {
+        setProgress(currentProgress);
+      }
+    }, 300);
 
     // Simulate API call - replace with actual backend call
     await new Promise((resolve) => setTimeout(resolve, 3000));
 
+    // Complete the progress bar
     clearInterval(interval);
     setProgress(100);
+    
+    // Small delay to show 100% before showing results
+    await new Promise((resolve) => setTimeout(resolve, 200));
 
     // Mock backtest results
     const mockResults: BacktestResult = {

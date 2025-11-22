@@ -65,6 +65,8 @@ export function usePredictions() {
         setRows(initialRows);
         setUsedIds(initialUsedIds);
       } catch (error) {
+        // Error loading predictions
+        // eslint-disable-next-line no-console
         console.error('Error loading predictions:', error);
       }
     };

@@ -22,10 +22,14 @@ import classes from './prediction.module.css';
 
 // Generate agent name from ID (matches the logic in AgentList)
 function getAgentNameFromId(agentId?: string): string {
-  if (!agentId) return 'Agent';
+  if (!agentId) {
+    return 'Agent';
+  }
   
   const match = agentId.match(/coin-(\d+)/);
-  if (!match) return agentId;
+  if (!match) {
+    return agentId;
+  }
   
   const index = parseInt(match[1], 10);
   const names = ['Doge', 'Shiba', 'Pepe', 'Floki', 'Bonk', 'Wif', 'Bome', 'Popcat'];
@@ -37,10 +41,14 @@ function getAgentNameFromId(agentId?: string): string {
 
 // Generate agent image URL from ID
 function getAgentImageFromId(agentId?: string): string {
-  if (!agentId) return 'https://api.dicebear.com/7.x/shapes/svg?seed=default';
+  if (!agentId) {
+    return 'https://api.dicebear.com/7.x/shapes/svg?seed=default';
+  }
   
   const match = agentId.match(/coin-(\d+)/);
-  if (!match) return 'https://api.dicebear.com/7.x/shapes/svg?seed=default';
+  if (!match) {
+    return 'https://api.dicebear.com/7.x/shapes/svg?seed=default';
+  }
   
   const index = parseInt(match[1], 10);
   const names = ['Doge', 'Shiba', 'Pepe', 'Floki', 'Bonk', 'Wif', 'Bome', 'Popcat'];
