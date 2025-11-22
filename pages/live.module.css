@@ -1,0 +1,49 @@
+.wrapper {
+  padding-top: 80px;
+  padding-bottom: 40px;
+}
+
+.title {
+  color: var(--mantine-color-white);
+  font-weight: 900;
+}
+
+.tabs {
+  margin-top: var(--mantine-spacing-md);
+}
+
+.tableWrapper {
+  background-color: var(--mantine-color-dark-7);
+  border-radius: var(--mantine-radius-md);
+  padding: var(--mantine-spacing-md);
+  border: 1px solid var(--mantine-color-dark-4);
+}
+
+.chartTitle {
+  color: var(--mantine-color-white);
+  font-weight: 700;
+}
+
+.chartContainer {
+  background-color: var(--mantine-color-dark-7);
+  border-radius: var(--mantine-radius-md);
+  padding: var(--mantine-spacing-lg);
+  border: 1px solid var(--mantine-color-dark-4);
+  margin-bottom: var(--mantine-spacing-xl);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .wrapper {
+    padding-top: 60px;
+    padding-bottom: 30px;
+  }
+  
+  .tableWrapper {
+    padding: var(--mantine-spacing-xs);
+  }
+
+  .chartContainer {
+    padding: var(--mantine-spacing-xs);
+  }
+}
+
