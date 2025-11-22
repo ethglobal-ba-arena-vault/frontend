@@ -1,29 +1,27 @@
-import { IconCircleDotted, IconFileCode, IconFlame, IconReceiptOff } from '@tabler/icons-react';
+import { IconBolt, IconChartBar, IconRocket, IconShieldLock } from '@tabler/icons-react';
 import { Button, Container, Grid, SimpleGrid, Text, ThemeIcon, Title } from '@mantine/core';
 import classes from './Features.module.css';
 
 const features = [
     {
-        icon: IconReceiptOff,
-        title: 'Free and open source',
-        description: 'All packages are published under MIT license, you can use Mantine in any project',
+        icon: IconRocket,
+        title: 'Instant Launch',
+        description: 'No presale, no team allocation. Just pure pump. Launch your coin in seconds.',
     },
     {
-        icon: IconFileCode,
-        title: 'TypeScript based',
-        description: 'Build type safe applications, all components and hooks export types',
+        icon: IconShieldLock,
+        title: 'Safe & Secure',
+        description: 'Liquidity is locked automatically. Rug pulls are impossible on our protocol.',
     },
     {
-        icon: IconCircleDotted,
-        title: 'No annoying focus ring',
-        description:
-            'With new :focus-visible selector focus ring will appear only when user navigates with keyboard',
+        icon: IconBolt,
+        title: 'Lightning Fast',
+        description: 'Built on the fastest chain for instant swaps and sniper-proof launches.',
     },
     {
-        icon: IconFlame,
-        title: 'Flexible',
-        description:
-            'Customize colors, spacing, shadows, fonts and many other settings with global theme object',
+        icon: IconChartBar,
+        title: 'Live Charts',
+        description: 'Real-time trading view integration for professional technical analysis.',
     },
 ];
 
@@ -34,11 +32,11 @@ export function Features() {
                 size={44}
                 radius="md"
                 variant="gradient"
-                gradient={{ deg: 133, from: 'blue', to: 'cyan' }}
+                gradient={{ deg: 133, from: 'pumpGreen.4', to: 'pumpGreen.8' }}
             >
                 <feature.icon size={26} stroke={1.5} />
             </ThemeIcon>
-            <Text fz="lg" mt="sm" fw={500}>
+            <Text fz="lg" mt="sm" fw={500} c="white">
                 {feature.title}
             </Text>
             <Text c="dimmed" fz="sm">
@@ -52,21 +50,22 @@ export function Features() {
             <Grid gutter={80}>
                 <Grid.Col span={{ base: 12, md: 5 }}>
                     <Title className={classes.title} order={2}>
-                        A fully featured React components library for your next project
+                        The fair launch platform for meme coins
                     </Title>
                     <Text c="dimmed">
-                        Build fully functional accessible web applications faster than ever – Mantine includes
-                        more than 120 customizable components and hooks to cover you in any situation
+                        Don't let your dreams be dreams. Launch the next 1000x gem today. 
+                        Community driven, fair, and open for everyone.
                     </Text>
 
                     <Button
                         variant="gradient"
-                        gradient={{ deg: 133, from: 'blue', to: 'cyan' }}
+                        gradient={{ deg: 133, from: 'pumpGreen.4', to: 'pumpGreen.8' }}
                         size="lg"
-                        radius="md"
+                        radius="xl"
                         mt="xl"
+                        c="black"
                     >
-                        Get started
+                        Start Trading
                     </Button>
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 7 }}>

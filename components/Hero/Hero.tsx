@@ -1,4 +1,4 @@
-import { Button, Container, Text, Title } from '@mantine/core';
+import { Button, Container, Text, Title, Group } from '@mantine/core';
 import { Dots } from './Dots';
 import classes from './Hero.module.css';
 
@@ -12,26 +12,26 @@ export function Hero() {
 
             <div className={classes.inner}>
                 <Title className={classes.title}>
-                    Automated AI{' '}
+                    Launch your{' '}
                     <Text component="span" className={classes.highlight} inherit>
-                        code reviews
+                        meme coin
                     </Text>{' '}
-                    for any stack
+                    instantly
                 </Title>
 
                 <Container p={0} size={600}>
                     <Text size="lg" c="dimmed" className={classes.description}>
-                        Build more reliable software with AI companion. AI is also trained to detect lazy
-                        developers who do nothing and just complain on Twitter.
+                        The fair launch platform. No presale, no team allocation. 
+                        Just pure pump. Start your journey to the moon today.
                     </Text>
                 </Container>
 
                 <div className={classes.controls}>
-                    <Button className={classes.control} size="lg" variant="default" color="gray">
-                        Book a demo
+                    <Button className={classes.control} size="lg" radius="xl">
+                        Start launching
                     </Button>
-                    <Button className={classes.control} size="lg">
-                        Purchase a license
+                    <Button className={classes.control} size="lg" variant="default" radius="xl">
+                        How it works
                     </Button>
                 </div>
             </div>

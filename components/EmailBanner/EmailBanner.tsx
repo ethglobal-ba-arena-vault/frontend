@@ -7,23 +7,23 @@ export function EmailBanner() {
         <Container size="xl" py={80}>
             <div className={classes.wrapper}>
                 <div className={classes.body}>
-                    <Title className={classes.title}>Wait a minute...</Title>
-                    <Text fw={500} fz="lg" mb={5}>
-                        Subscribe to our newsletter!
+                    <Title className={classes.title}>Don't miss the next pump</Title>
+                    <Text fw={500} fz="lg" mb={5} c="white">
+                        Join our community!
                     </Text>
                     <Text fz="sm" c="dimmed">
-                        You will never miss important product updates, latest news and community QA sessions. Our
-                        newsletter is once a week, every Sunday.
+                        Get notified about new launches, trending coins, and platform updates.
+                        We won't spam you, promised.
                     </Text>
 
                     <div className={classes.controls}>
                         <TextInput
                             placeholder="Your email"
                             classNames={{ input: classes.input, root: classes.inputWrapper }}
-                            radius="md"
+                            radius="xl"
                             size="md"
                         />
-                        <Button className={classes.control} radius="md" size="md">
+                        <Button className={classes.control} radius="xl" size="md" c="black">
                             Subscribe
                         </Button>
                     </div>

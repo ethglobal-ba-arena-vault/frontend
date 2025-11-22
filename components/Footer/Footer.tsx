@@ -58,9 +58,9 @@ export function Footer() {
         <footer className={classes.footer}>
             <Container className={classes.inner}>
                 <div className={classes.logo}>
-                    <MantineLogo size={30} />
+                    <Text fw={900} size="xl" c="pumpGreen">PUMP.CLONE</Text>
                     <Text size="xs" c="dimmed" className={classes.description}>
-                        Build fully functional accessible web applications faster than ever
+                        Launch meme coins instantly
                     </Text>
                 </div>
                 <div className={classes.groups}>{groups}</div>

@@ -1,30 +1,34 @@
-import { AspectRatio, Card, Container, Image, SimpleGrid, Text } from '@mantine/core';
+import { AspectRatio, Card, Container, Image, SimpleGrid, Text, Badge, Group } from '@mantine/core';
 import classes from './Articles.module.css';
 
 const mockdata = [
     {
-        title: 'Top 10 places to visit in Norway this summer',
+        title: 'PEPE (Pepe)',
         image:
-            'https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80',
-        date: 'August 18, 2022',
+            'https://images.unsplash.com/photo-1620321023374-d1a68fddadb3?ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80',
+        date: 'Market Cap: $1.2M',
+        change: '+120%',
     },
     {
-        title: 'Best forests to visit in North America',
+        title: 'DOGE (Dogecoin)',
         image:
-            'https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80',
-        date: 'August 27, 2022',
+            'https://images.unsplash.com/photo-1622630998477-20aa696fab05?ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80',
+        date: 'Market Cap: $420k',
+        change: '+69%',
     },
     {
-        title: 'Hawaii beaches review: better than you think',
+        title: 'SHIB (Shiba Inu)',
         image:
-            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80',
-        date: 'September 9, 2022',
+            'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80',
+        date: 'Market Cap: $50k',
+        change: '+12%',
     },
     {
-        title: 'Mountains at night: 12 best locations to enjoy the view',
+        title: 'WOJAK (Wojak)',
         image:
-            'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80',
-        date: 'September 12, 2022',
+            'https://images.unsplash.com/photo-1642104704074-907c0698cbd9?ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80',
+        date: 'Market Cap: $10k',
+        change: '-5%',
     },
 ];
 
@@ -34,8 +38,13 @@ export function Articles() {
             <AspectRatio ratio={1920 / 1080}>
                 <Image src={article.image} radius="md" />
             </AspectRatio>
-            <Text className={classes.date} mt="md">{article.date}</Text>
-            <Text className={classes.title} mt="xs">{article.title}</Text>
+            <Group justify="space-between" mt="md" mb="xs">
+                <Text className={classes.date}>{article.date}</Text>
+                <Badge color={article.change.startsWith('+') ? 'green' : 'red'} variant="light">
+                    {article.change}
+                </Badge>
+            </Group>
+            <Text className={classes.title} mt={5}>{article.title}</Text>
         </Card>
     ));
 
