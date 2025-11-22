@@ -1,5 +1,5 @@
 import { Container, SimpleGrid, Pagination, Group, Center } from '@mantine/core';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { CoinCard, CoinData } from '../CoinCard/CoinCard';
 import classes from './CoinList.module.css';
 
@@ -10,18 +10,28 @@ interface CoinListProps {
   filter?: FilterType;
 }
 
+// Seeded random number generator for consistent SSR/client values
+function seededRandom(seed: number) {
+  let value = seed;
+  return () => {
+    value = (value * 9301 + 49297) % 233280;
+    return value / 233280;
+  };
+}
+
 // Mock data - replace with actual API call
-const generateMockCoins = (count: number, filter?: FilterType): CoinData[] => {
+const generateMockCoins = (count: number, filter?: FilterType, seed: number = 12345): CoinData[] => {
   const coins: CoinData[] = [];
   const names = ['Doge', 'Shiba', 'Pepe', 'Floki', 'Bonk', 'Wif', 'Bome', 'Popcat'];
   const symbols = ['DOGE', 'SHIB', 'PEPE', 'FLOKI', 'BONK', 'WIF', 'BOME', 'POPCAT'];
+  const random = seededRandom(seed);
 
   for (let i = 0; i < count; i++) {
     const nameIndex = i % names.length;
-    const price = Math.random() * 0.1 + 0.001;
-    const priceChange = (Math.random() - 0.5) * 40;
-    const marketCap = Math.random() * 50e6 + 1e6;
-    const isLive = Math.random() > 0.7;
+    const price = random() * 0.1 + 0.001;
+    const priceChange = (random() - 0.5) * 40;
+    const marketCap = random() * 50e6 + 1e6;
+    const isLive = random() > 0.7;
     const isFeatured = i < 3;
     
     coins.push({
@@ -32,7 +42,7 @@ const generateMockCoins = (count: number, filter?: FilterType): CoinData[] => {
       price,
       priceChange24h: priceChange,
       marketCap,
-      volume24h: marketCap * (Math.random() * 0.5 + 0.1),
+      volume24h: marketCap * (random() * 0.5 + 0.1),
       isLive,
       isFeatured,
     });
@@ -72,8 +82,15 @@ export function CoinList({ coins: initialCoins, filter }: CoinListProps) {
     setPage(1);
   }, [filter]);
   
-  // Use provided coins or generate mock data
-  const coins = initialCoins.length > 0 ? initialCoins : generateMockCoins(48, filter);
+  // Use provided coins or generate mock data with stable seed for SSR
+  // The stable seed ensures server and client generate the same data
+  const coins = useMemo(() => {
+    if (initialCoins.length > 0) {
+      return initialCoins;
+    }
+    // Use a stable seed so server and client generate the same data
+    return generateMockCoins(48, filter, 12345);
+  }, [initialCoins, filter]);
   
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;

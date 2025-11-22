@@ -1,4 +1,4 @@
-import { Container, Title, Group, Badge, Button } from '@mantine/core';
+import { Container, Title, Group, Button } from '@mantine/core';
 import { IconStar, IconFlame, IconCircleDot, IconCoin, IconLeaf, IconPlanet, IconMessageCircle, IconBolt } from '@tabler/icons-react';
 import classes from './TrendingCoins.module.css';
 
@@ -34,14 +34,6 @@ export function TrendingCoins({ activeFilter, onFilterChange }: TrendingCoinsPro
         <Title order={2} className={classes.title}>
           Now trending
         </Title>
-        <Group gap="xs">
-          <Badge variant="light" color="gray" size="lg">
-            Nsfw
-          </Badge>
-          <Badge variant="light" color="gray" size="lg">
-            Animations
-          </Badge>
-        </Group>
       </Group>
 
       <Group gap="xs" className={classes.filters} wrap="wrap">

@@ -1,7 +1,5 @@
 import { Carousel } from '@mantine/carousel';
 import { Button, Paper, Text, Title, Container } from '@mantine/core';
-import Autoplay from 'embla-carousel-autoplay';
-import { useRef } from 'react';
 import classes from './Carousel.module.css';
 
 interface CardProps {
@@ -62,8 +60,6 @@ const data = [
 ];
 
 export function CarouselCards() {
-    const autoplay = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
-
     const slides = data.map((item) => (
         <Carousel.Slide key={item.title}>
             <Card {...item} />
@@ -77,9 +73,6 @@ export function CarouselCards() {
                 slideGap={0}
                 loop
                 withIndicators
-                plugins={[autoplay.current]}
-                onMouseEnter={autoplay.current.stop}
-                onMouseLeave={autoplay.current.reset}
             >
                 {slides}
             </Carousel>

@@ -35,6 +35,9 @@ export function Header() {
         setMounted(true);
     }, []);
 
+    // Determine connection state - default to false on server to match initial client render
+    const showConnected = mounted && isConnected;
+
     return (
         <Box>
             <header className={classes.header}>
@@ -56,7 +59,7 @@ export function Header() {
                     </Group>
 
                     <Group visibleFrom="sm">
-                        {mounted && isConnected ? (
+                        {showConnected ? (
                             <Group gap="xs">
                                 <Button variant="filled" color="pumpGreen" size="sm" radius="xl">
                                     {address ? truncateAddress(address) : 'Connected'}
@@ -113,7 +116,7 @@ export function Header() {
                     <Divider my="sm" />
 
                     <Group justify="center" grow pb="xl" px="md">
-                         {mounted && isConnected ? (
+                         {showConnected ? (
                             <>
                                 <Button variant="filled" color="pumpGreen" size="sm">
                                     {address ? truncateAddress(address) : 'Connected'}

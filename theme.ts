@@ -20,6 +20,13 @@ export const theme = createTheme({
   },
   fontFamily: 'Inter, sans-serif',
   defaultRadius: 'md',
+  fontSizes: {
+    xs: '16px',
+    sm: '18px',
+    md: '20px',
+    lg: '22px',
+    xl: '24px',
+  },
   components: {
     Button: {
       defaultProps: {

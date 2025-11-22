@@ -7,7 +7,6 @@ export default function HomePage() {
 
   return (
     <>
-      <Hero />
       <TrendingCoins activeFilter={activeFilter} onFilterChange={setActiveFilter} />
       <CoinList coins={[]} filter={activeFilter} />
       <Footer />

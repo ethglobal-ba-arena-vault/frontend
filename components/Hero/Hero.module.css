@@ -14,16 +14,6 @@
     z-index: 1;
 }
 
-.dots {
-    position: absolute;
-    color: light-dark(var(--mantine-color-dark-6), var(--mantine-color-dark-4));
-    opacity: 0.5;
-
-    @media (max-width: $mantine-breakpoint-sm) {
-        display: none;
-    }
-}
-
 .title {
     text-align: center;
     font-weight: 900;
